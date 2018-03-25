@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Desapego</string>
+
+    <string name="facebook_app_id">205200276913034</string>
+    <string name="fb_login_protocol_scheme">fb205200276913034</string>
+
+</resources>

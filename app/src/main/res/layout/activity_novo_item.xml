@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ScrollView01"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbars="none"
+    android:background="@color/branco">
+
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context="com.example.savio.desapego.NovoItemActivity"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/principal_recentes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp">
+
+            <TextView
+                android:id="@+id/novo_item_cancelar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="cancelar"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/cinza"/>
+
+            <TextView
+                android:id="@+id/novo_item_compartilhar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="compartilhar"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/Principal"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/cinzinha"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/novo_item_lista"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.RecyclerView>
+
+                <ImageView
+                    android:id="@+id/novo_item_btn_img"
+                    android:layout_width="120dp"
+                    android:layout_height="140dp"
+                    android:src="@drawable/ic_add"
+                    android:layout_toEndOf="@+id/novo_item_lista"
+                    android:background="@drawable/bg_botao_add_img"
+                    android:tint="@color/Principal"
+                    android:padding="32dp"
+                    android:layout_marginStart="8dp"
+                    tools:ignore="ContentDescription"
+                    android:layout_marginEnd="16dp"/>
+
+            </RelativeLayout>
+
+        </HorizontalScrollView>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/cinzinha"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/novo_item_titulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:maxLines="1"
+            android:hint="o que está doando..."
+            android:textColorHint="@color/cinzinha2"
+            android:inputType="text"
+            android:backgroundTint="@color/cinzinha2"/>
+
+        <EditText
+            android:id="@+id/novo_item_descricao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:hint="escreva uma pequena descrição..."
+            android:textColorHint="@color/cinzinha2"
+            android:backgroundTint="@android:color/transparent"/>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/cinzinha"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/novo_item_local"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:maxLines="1"
+            android:text="Belém/Pará"
+            android:textColor="@color/Principal"
+            android:backgroundTint="@android:color/transparent"
+            android:drawableStart="@drawable/ic_local"
+            android:drawableTint="@color/Principal"
+            android:focusable="false"
+            tools:ignore="LabelFor,TextFields" />
+
+    </LinearLayout>
+
+</ScrollView>

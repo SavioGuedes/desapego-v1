@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/branco"
+            tools:context="com.example.savio.desapego.DetalheActivity">
+
+            <ImageView
+                android:id="@+id/detalhe_voltar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:elevation="1dp"
+                android:padding="16dp"
+                android:scaleX="1.3"
+                android:scaleY="1.3"
+                android:src="@drawable/ic_voltar"
+                android:tint="@color/branco" />
+
+            <LinearLayout
+                android:id="@+id/detalhe_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/detalhe_imagem"
+                    android:layout_width="match_parent"
+                    android:layout_height="450dp"
+                    android:background="@color/cinzinha" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/detalhe_titulo"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:text="Titulo do produto"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.1" />
+
+                    <ImageView
+                        android:id="@+id/detalhe_gostei"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1"
+                        android:scaleX="1.3"
+                        android:scaleY="1.3"
+                        android:src="@drawable/ic_estrela"
+                        android:tint="@color/cinza" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/detalhe_linha"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:alpha="0.3"
+                    android:background="@color/cinza" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1"
+                        android:src="@android:drawable/stat_sys_phone_call"
+                        android:tint="@color/Principal" />
+
+                    <TextView
+                        android:id="@+id/detalhe_telefone"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.9"
+                        android:text="(91) 98552-5445"
+                        android:textColor="@color/Principal"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1"
+                        android:src="@drawable/ic_local"
+                        android:tint="@color/Principal" />
+
+                    <TextView
+                        android:id="@+id/detalhe_endereco"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.9"
+                        android:text="Avenida João Paulo II 428 Marco"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1"
+                        android:src="@drawable/ic_relogio"
+                        android:tint="@color/Principal" />
+
+                    <TextView
+                        android:id="@+id/detalhe_data"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.9"
+                        android:text="27/11/2017 às 11:00 horas"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/detalhe_linha2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:alpha="0.3"
+                    android:background="@color/cinza" />
+
+                <TextView
+                    android:id="@+id/detalhe_descricao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="Aqui entram informações descritas pelo doador sobre produto, ou da pessoa que está querendo trocar algo."
+                    android:textSize="14dp" />
+
+                <View
+                    android:id="@+id/detalhe_linha3"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:alpha="0.3"
+                    android:background="@color/cinza" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/dealhe_nome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/detalhe_info"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:paddingLeft="8dp"
+                android:text="Nome do usuario"
+                android:textColor="@color/Principal"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dealhe_nome"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="16dp">
+
+                <ImageView
+                    android:id="@+id/detalhe_ic_local"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_local"
+                    android:tint="@color/Principal" />
+
+                <TextView
+                    android:id="@+id/dealhe_cidade_estado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/detalhe_ic_local"
+                    android:text="Belém - Pará"
+                    android:textColor="@color/Principal"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</ScrollView>

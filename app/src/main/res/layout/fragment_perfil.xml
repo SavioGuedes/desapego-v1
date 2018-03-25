@@ -1,0 +1,143 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ScrollView01"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <RelativeLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/branco"
+        tools:context="com.example.savio.desapego.fragments.PerfilFragment">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/parfil_cima"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@color/branco">
+
+            <ImageView
+                android:id="@+id/perfil_mais"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_more_vert"
+                android:tint="@color/branco"
+                android:layout_margin="16dp"
+                android:elevation="10dp"
+                tools:ignore="ContentDescription"
+                android:layout_gravity="end"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/perfil_dados"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_perfil">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/perfil_foto"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="24dp"
+                        android:src="@drawable/img_circle"
+                        app:civ_border_color="@color/branco"
+                        app:civ_border_width="2dp"/>
+
+                    <TextView
+                        android:id="@+id/perfil_nome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="48dp"
+                        android:text="Nome do usuario"
+                        android:textColor="@color/branco"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/perfil_tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="10dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/perfil_posts"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:gravity="center"
+                        android:layout_marginTop="24dp"
+                        android:text="POST"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="24dp"
+                        android:background="@color/cinzinha"/>
+
+                    <TextView
+                        android:id="@+id/perfil_salvos"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:gravity="center"
+                        android:layout_marginTop="24dp"
+                        android:text="SALVO"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/cinzinha"
+                    android:layout_marginBottom="24dp"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/perfil_btn_publicar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:minWidth="200dp"
+                android:elevation="10dp"
+                android:background="@drawable/bg_botao"
+                android:backgroundTint="@color/branco"
+                android:text="PUBLICAR"
+                android:textColor="@color/Principal"
+                app:layout_anchor="@id/perfil_dados"
+                app:layout_anchorGravity="bottom|center"/>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+        <FrameLayout
+            android:id="@+id/perfil_inflar"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/parfil_cima"/>
+
+    </RelativeLayout>
+
+</ScrollView>
