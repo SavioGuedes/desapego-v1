@@ -10,7 +10,7 @@ import android.util.Log;
 import android.widget.Toast;
 import com.example.savio.desapego.adapters.PrincipalAdapter;
 import com.example.savio.desapego.api.model.Item;
-import com.example.savio.desapego.retrofit.ApiService;
+import com.example.savio.desapego.services.ApiService;
 import com.example.savio.desapego.utils.ServiceGenerator;
 import java.util.List;
 import retrofit2.Call;

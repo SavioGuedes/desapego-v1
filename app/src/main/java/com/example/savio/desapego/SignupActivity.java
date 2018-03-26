@@ -2,6 +2,7 @@ package com.example.savio.desapego;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +11,7 @@ import android.widget.TextView;
 import com.example.savio.desapego.api.model.ProfileAttributes;
 import com.example.savio.desapego.api.model.Register;
 import com.example.savio.desapego.helpers.AuthHelper;
-import com.example.savio.desapego.retrofit.ApiService;
+import com.example.savio.desapego.services.ApiService;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -41,9 +42,9 @@ public class SignupActivity extends AppCompatActivity {
         btn_cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!tv_nome.getText().toString().equals("") &&
-                        !tv_email.getText().toString().equals("") &&
-                        !tv_senha.getText().toString().equals("")) {
+                if (!TextUtils.isEmpty(tv_nome.getText().toString()) &&
+                        !TextUtils.isEmpty(tv_email.getText().toString()) &&
+                        !TextUtils.isEmpty(tv_senha.getText().toString())) {
 
                     Register new_user = new Register();
                     ProfileAttributes new_user_profile = new ProfileAttributes();
@@ -52,7 +53,7 @@ public class SignupActivity extends AppCompatActivity {
                     new_user.setPassword(tv_senha.getText().toString());
                     new_user.setPasswordConfirmation(tv_senha.getText().toString());
                     new_user.setProfileAttributes(new_user_profile);
-                    createAccount();
+                    createAccount(new_user);
 
                 } else {
                     Log.i("LISTA", "Erro: " + "Campos obrigatorios");
@@ -72,14 +73,11 @@ public class SignupActivity extends AppCompatActivity {
     }//fim do onCreate
 
 
-    public void createAccount() {
+    public void createAccount(Register register) {
         //validação de login api nativa
-        final String senha = ((EditText) findViewById(R.id.login_senha)).getText().toString();
-        final String email = ((EditText) findViewById(R.id.login_email)).getText().toString();
         loginHelper = new AuthHelper();
         Intent intent = new Intent(this, MainActivity.class);
-        loginHelper.createAccount(this, intent, email, senha);
-
+        loginHelper.createAccount(this, intent, register);
     }
     //------------------fim de codigo-------------------------------------------------------------------//
 }

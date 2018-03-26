@@ -51,6 +51,7 @@
         </activity>
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".DetalheActivity" />
+        <activity android:name=".ComfirmarCadastroActivity" />
         <activity android:name=".SignupActivity"></activity>
         <activity android:name=".NovoItemActivity"></activity>
     </application>

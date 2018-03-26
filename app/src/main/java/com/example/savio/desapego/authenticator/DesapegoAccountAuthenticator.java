@@ -12,7 +12,7 @@ import android.text.TextUtils;
 
 import com.example.savio.desapego.LoginActivity;
 import com.example.savio.desapego.helpers.AuthHelper;
-import com.example.savio.desapego.retrofit.ApiService;
+import com.example.savio.desapego.services.ApiService;
 
 import static android.accounts.AccountManager.KEY_BOOLEAN_RESULT;
 

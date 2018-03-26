@@ -10,7 +10,7 @@ import io.realm.annotations.PrimaryKey;
 public class User extends RealmObject {
     @PrimaryKey
     private String realm_id;
-    private Profile profile;
+    private Perfil perfil;
     private String auth_token;
     @SerializedName("_id")
     @Expose
@@ -33,7 +33,7 @@ public class User extends RealmObject {
     private String confirmationSentAt;
 
     public User(){
-        profile = new Profile();
+        perfil = new Perfil();
     }
 
 
@@ -93,12 +93,12 @@ public class User extends RealmObject {
         this.realm_id = realm_id;
     }
 
-    public Profile getProfile() {
-        return profile;
+    public Perfil getPerfil() {
+        return perfil;
     }
 
-    public void setProfile(Profile profile) {
-        this.profile = profile;
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
     }
 
     public String getAuth_token() {

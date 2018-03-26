@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,13 +14,14 @@ import android.widget.Toast;
 
 import com.example.savio.desapego.api.model.User;
 import com.example.savio.desapego.helpers.AuthHelper;
-import com.example.savio.desapego.retrofit.ApiService;
+import com.example.savio.desapego.services.ApiService;
 import com.example.savio.desapego.utils.ServiceGenerator;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -74,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         btn_fb = (Button) findViewById(R.id.login_btn_fb);
 
         btnfacebook = (LoginButton) findViewById(R.id.login_fb_button);
-        btnfacebook.setReadPermissions(Arrays.asList("public_profile", "email", "user_friends"));
+        btnfacebook.setReadPermissions(Arrays.asList("public_profile", "email"));
 
         cancelar = (ImageView) findViewById(R.id.login_cancelar);
 
@@ -137,18 +139,13 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         pegarInformacoesUsuario(object);
-
                     }
                 });
+
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,email,name,picture");
+                parameters.putString("fields", "id,email,name");
                 graphRequest.setParameters(parameters);
                 graphRequest.executeAsync();
-
-
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
-
             }
 
             @Override
@@ -181,11 +178,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private void pegarInformacoesUsuario(JSONObject object) {
         try {
-            user = new User();
+            Bundle bundle = new Bundle();
             foto_perfil = new URL("https://graph.facebook.com/" + object.getString("id") + "/picture?width=250&height=250");
-
-            user.getProfile().setImg_url(foto_perfil.toString());
-            user.getProfile().setName(object.getString("name"));
+            bundle.putString("PICTURE", foto_perfil.toString());
+            bundle.putString("EMAIL",object.getString("email"));
+            bundle.putString("NAME",object.getString("name"));
+            Intent intent = new Intent(this, ComfirmarCadastroActivity.class);
+            intent.putExtras(bundle);
+            this.startActivity(intent);
+            finish();
 
         } catch (MalformedURLException e) {
 

@@ -1,9 +1,9 @@
-package com.example.savio.desapego.retrofit;
+package com.example.savio.desapego.services;
 
 import com.example.savio.desapego.api.model.Item;
 import com.example.savio.desapego.api.model.Login;
 import com.example.savio.desapego.api.model.LoginResponse;
-import com.example.savio.desapego.api.model.Profile;
+import com.example.savio.desapego.api.model.Perfil;
 import com.example.savio.desapego.api.model.Register;
 
 import java.util.List;
@@ -31,7 +31,7 @@ public interface ApiService {
     Call<List<Item>> getUserItems();
 
     @GET("perfil")
-    Call<Profile> getProfile();
+    Call<Perfil> getProfile();
 
     @GET("inventory/{id}")
     Call<Item> getItem(@Path("id") String itemId);

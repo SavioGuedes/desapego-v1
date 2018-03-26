@@ -11,6 +11,9 @@ public class ProfileAttributes {
     @SerializedName("phone")
     @Expose
     private String phone;
+    @SerializedName("img_url")
+    @Expose
+    private String imgUrl;
 
 
     public String getName() {
@@ -27,5 +30,13 @@ public class ProfileAttributes {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
     }
 }

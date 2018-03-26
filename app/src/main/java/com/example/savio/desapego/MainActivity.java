@@ -1,6 +1,7 @@
 package com.example.savio.desapego;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +13,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.example.savio.desapego.fragments.PerfilFragment;
 import com.example.savio.desapego.fragments.PesquisaFragment;
 import com.example.savio.desapego.fragments.PrincipalFragment;
@@ -63,21 +65,30 @@ public class MainActivity extends AppCompatActivity {
 
 
     //infla o fragment apertado no item do menu
-    private void cliqueItemMenu(final ImageView imageView, final Fragment fragment, final String key){
+    private void cliqueItemMenu(final ImageView imageView, final Fragment fragment, final String key) {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.equals(key, "perfil")) { //Verifica se é um recurso protegido
-                    //Se houver usuario adeus main activity... olá login activity;
-                    if (authHelper.isAnyUser(v.getContext())){
-                        profileHelper = new ProfileHelper(MainActivity.this);
-                        profileHelper.showProfile(fragment);
-                    } // Se não houver usuario chama login
-                }else {
-                    fragmentManager = getSupportFragmentManager();
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    //confirmar transição
-                    transaction.replace(R.id.inflar, fragment, key).commit();
+
+                switch (key) {
+                    case "perfil":
+                        //Se houver usuario adeus main activity... olá login activity;
+                        if (authHelper.isAnyUser(v.getContext())) {
+                            profileHelper = new ProfileHelper(MainActivity.this);
+                            profileHelper.showProfile(fragment);
+                        }else { // Se não houver usuario chama login
+
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            //            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }
+                        break;
+                    default:
+                        fragmentManager = getSupportFragmentManager();
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+                        //confirmar transição
+                        transaction.replace(R.id.inflar, fragment, key).commit();
+                        break;
                 }
             }
         });
@@ -85,17 +96,16 @@ public class MainActivity extends AppCompatActivity {
 
     //chamado no fragment para mudar a cor do icone selecionado
     @SuppressLint("NewApi")
-    public void mudarCorIcone(ImageView imageView, int color){
+    public void mudarCorIcone(ImageView imageView, int color) {
 
         imageView.setColorFilter(ContextCompat.getColor(MainActivity.this, color));
     }
 
     //chamado no tabs do PerfilFragment para mudar a cor do texto
-    public void mudarCorTextoTab(TextView textView, int color){
+    public void mudarCorTextoTab(TextView textView, int color) {
 
         textView.setTextColor(getResources().getColor(color));
     }
-
 
 
     @Override

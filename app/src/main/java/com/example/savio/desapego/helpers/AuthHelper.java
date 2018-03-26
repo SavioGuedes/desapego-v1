@@ -13,7 +13,7 @@ import com.example.savio.desapego.MainActivity;
 import com.example.savio.desapego.api.model.Login;
 import com.example.savio.desapego.api.model.LoginResponse;
 import com.example.savio.desapego.api.model.Register;
-import com.example.savio.desapego.retrofit.ApiService;
+import com.example.savio.desapego.services.ApiService;
 import com.example.savio.desapego.utils.ServiceGenerator;
 import com.facebook.AccessToken;
 
@@ -64,12 +64,7 @@ public class AuthHelper {
         });
     }
 
-    public void createAccount(final Context context, final Intent intent, final String email, final String password) {
-        Register register = new Register();
-        register.setEmail(email);
-        register.setPassword(password);
-        register.setPasswordConfirmation(password);
-
+    public void createAccount(final Context context, final Intent intent, final Register register) {
         apiService.createUser(register).enqueue(new Callback<LoginResponse>() {
             //metodos de respostas
             @Override
@@ -79,7 +74,7 @@ public class AuthHelper {
                     Log.i("LISTA", "Erro: " + "Erro: " + response.code());
                 } else {
                     //                  Atualiza os dados do usuario no Account Manager
-                    updateDeviceAccountInfo(response, context, email);
+                    updateDeviceAccountInfo(response, context, register.getEmail());
                     //                  Inicia a nova atividade
                     abrirNovaActivity(context, intent);
                 }
@@ -125,21 +120,16 @@ public class AuthHelper {
     }
 
     public boolean isAnyUser(final Context context) {
+        Intent intent;
+        Account[] accounts;
+        String authToken="";
         if (mAccountManager == null)
             setAccountManager(context);
-        Account[] accounts = mAccountManager.getAccountsByType("com.desapego");
-        String authToken = "";
-        if (mAccountManager == null)
-            setAccountManager(context);
-
+        accounts = mAccountManager.getAccountsByType("com.desapego");
         if (accounts.length > 0)
             authToken = mAccountManager.peekAuthToken(accounts[0], "full_access");
-
-//        Se não há um token do Facebook ou da API vai pra tela de login
-        if (AccessToken.getCurrentAccessToken() == null && TextUtils.isEmpty(authToken)) {
-            Intent intent = new Intent(context, LoginActivity.class);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            abrirNovaActivity(context, intent);
+        //        Se não há um token do Facebook ou da API vai pra tela de login
+        if (TextUtils.isEmpty(authToken)) {
             Toast.makeText(context, "Precisa logar", Toast.LENGTH_SHORT).show();
             return false;
         }
