@@ -48,14 +48,12 @@
 
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
+        <com.hendraanggrian.widget.PaginatedRecyclerView
             android:id="@+id/principal_lista"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/principal_recentes"
-            android:paddingStart="12dp">
-
-        </android.support.v7.widget.RecyclerView>
+            android:paddingStart="12dp"/>
 
         <LinearLayout
             android:id="@+id/principal_categorias"

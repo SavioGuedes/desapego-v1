@@ -8,10 +8,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.savio.desapego.adapters.NovoItemAdapter;
+import com.example.savio.desapego.api.model.Item;
+import com.example.savio.desapego.helpers.ItemsHelper;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -27,6 +33,10 @@ public class NovoItemActivity extends AppCompatActivity {
     ImageView novo_item_btn_img;
 
     public static final int RESULT_GALLERY = 0;
+    private TextView compartilhar_item_tv;
+    private TextView novo_item_titulo;
+    private TextView novo_item_desc;
+    private ItemsHelper itemsHelper;
 
 //------------------ciclo de vida------------------------------------------------------------------------//
 
@@ -48,16 +58,18 @@ public class NovoItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novo_item);
 
+        itemsHelper = new ItemsHelper(NovoItemActivity.this);
         fotos_galeria = new ArrayList<>();
-
         //configuração do recyclerview
         recyclerview = (RecyclerView) findViewById(R.id.novo_item_lista);
         recyclerview.setHasFixedSize(true);
         layoutmanager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerview.setLayoutManager(layoutmanager);
+        novo_item_titulo = (TextView) findViewById(R.id.novo_item_titulo);
+        novo_item_desc = (TextView) findViewById(R.id.novo_item_cancelar);
 
+        compartilhar_item_tv = (TextView) findViewById(R.id.novo_item_compartilhar);
         novo_item_btn_img = (ImageView) findViewById(R.id.novo_item_btn_img);
-
 //------------------Listeres------------------------------------------------------------------------//
 
         novo_item_btn_img.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +79,18 @@ public class NovoItemActivity extends AppCompatActivity {
                 pegarFotos(); //coleta as informações que serão passadas para o adapter
             }
         });
+
+        compartilhar_item_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (fotos_galeria.size() > 0 && !TextUtils.isEmpty(novo_item_titulo.getText()) && !TextUtils.isEmpty(novo_item_desc.getText())) {
+                    // faz a chamada à API
+                    Item novoItem = new Item();
+                    //Ainda pensando como vai ser essa merda
+                }
+            }
+        });
+
 
     }//fim do onCreate
 

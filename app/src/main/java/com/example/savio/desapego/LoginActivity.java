@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        loginHelper = new AuthHelper();
         //Pega o account type do AccountManager setado pelo DesapegoAccountAuthenticator
         accountType = getIntent().getStringExtra(AccountManager.KEY_ACCOUNT_TYPE);
 
@@ -134,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
 
                 //faz a requisição na api GRAPH do Facebook
+
                 GraphRequest graphRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
 
                     @Override
@@ -171,22 +172,23 @@ public class LoginActivity extends AppCompatActivity {
         final String senha = ((EditText) findViewById(R.id.login_senha)).getText().toString();
         final String email = ((EditText) findViewById(R.id.login_email)).getText().toString();
 //      Chama a classe que contém a lógica de login
-        loginHelper = new AuthHelper();
+
         Intent intent = new Intent(this, MainActivity.class);
         loginHelper.signIn(this, intent, email, senha);
     }
 
     private void pegarInformacoesUsuario(JSONObject object) {
         try {
+            Intent intent;
             Bundle bundle = new Bundle();
             foto_perfil = new URL("https://graph.facebook.com/" + object.getString("id") + "/picture?width=250&height=250");
             bundle.putString("PICTURE", foto_perfil.toString());
             bundle.putString("EMAIL",object.getString("email"));
             bundle.putString("NAME",object.getString("name"));
-            Intent intent = new Intent(this, ComfirmarCadastroActivity.class);
+            intent = new Intent(this, ComfirmarCadastroActivity.class);
             intent.putExtras(bundle);
-            this.startActivity(intent);
-            finish();
+            loginHelper.verifyUser(LoginActivity.this, intent);
+
 
         } catch (MalformedURLException e) {
 

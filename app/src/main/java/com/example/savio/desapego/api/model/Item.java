@@ -14,28 +14,27 @@ public class Item {
     @SerializedName("_keywords")
     @Expose
     private List<String> keywords = null;
+    @SerializedName("created_at")
+    @Expose
+    private String createdAt;
     @SerializedName("description")
     @Expose
     private String description;
-    @SerializedName("image_url")
+    @SerializedName("fotinhas")
     @Expose
-    private String imageUrl;
-    @SerializedName("inventory_id")
-    @Expose
-    private String inventoryId;
+    private List<Fotinha> fotinhas = null;
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("owner_id")
+    @SerializedName("profile_id")
     @Expose
-    private MongoId ownerId;
+    private MongoId profileId;
+    @SerializedName("updated_at")
+    @Expose
+    private String updatedAt;
 
     public String getId() {
         return id.get$oid();
-    }
-
-    public void setId(MongoId id) {
-        this.id = id;
     }
 
     public List<String> getKeywords() {
@@ -54,22 +53,6 @@ public class Item {
         this.description = description;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public String getInventoryId() {
-        return inventoryId;
-    }
-
-    public void setInventoryId(String inventoryId) {
-        this.inventoryId = inventoryId;
-    }
-
     public String getName() {
         return name;
     }
@@ -78,11 +61,28 @@ public class Item {
         this.name = name;
     }
 
-    public String getOwnerId() {
-        return ownerId.get$oid();
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setOwnerId(MongoId ownerId) {
-        this.ownerId = ownerId;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
+
+    public List<Fotinha> getFotinhas() {
+        return fotinhas;
+    }
+
+    public void setFotinhas(List<Fotinha> fotinhas) {
+        this.fotinhas = fotinhas;
+    }
+
+    public String getProfileId() {
+        return profileId.get$oid();
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
 }

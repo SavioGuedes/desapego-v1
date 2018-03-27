@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import com.example.savio.desapego.R;
 import com.example.savio.desapego.helpers.ItemsHelper;
+import com.hendraanggrian.widget.PaginatedRecyclerView;
 
 public class PrincipalFragment extends Fragment {
     RecyclerView recyclerview;
@@ -25,6 +26,7 @@ public class PrincipalFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_principal, container, false);
+
         mulher = (CardView) view.findViewById(R.id.principal_categoria_mulher);
         homem = (CardView) view.findViewById(R.id.principal_categoria_homem);
         animal = (CardView) view.findViewById(R.id.principal_categoria_animal);

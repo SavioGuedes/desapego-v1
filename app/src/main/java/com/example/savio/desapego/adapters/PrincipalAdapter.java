@@ -4,6 +4,7 @@ import com.example.savio.desapego.DetalheActivity;
 import com.example.savio.desapego.R;
 import com.example.savio.desapego.api.model.Item;
 import com.example.savio.desapego.helpers.ItemsHelper;
+import com.hendraanggrian.widget.PaginatedRecyclerView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
@@ -18,7 +19,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PrincipalAdapter extends RecyclerView.Adapter<PrincipalAdapter.Visao>{
+public class PrincipalAdapter extends RecyclerView.Adapter<PrincipalAdapter.Visao> {
 
     List<Item> dados;
     Context context;
@@ -44,7 +45,7 @@ public class PrincipalAdapter extends RecyclerView.Adapter<PrincipalAdapter.Visa
     public void onBindViewHolder(PrincipalAdapter.Visao visao, int position) {
 
         visao.titulo.setText(dados.get(position).getName());
-        Picasso.get().load(dados.get(position).getImageUrl()).into(visao.item_image);//altera o icone
+        Picasso.get().load(dados.get(position).getFotinhas().get(1).getUrl()).into(visao.item_image);//altera o icone
 
     }
 
@@ -71,7 +72,7 @@ public class PrincipalAdapter extends RecyclerView.Adapter<PrincipalAdapter.Visa
                 public void onClick(View v) {
                     itemsHelper = new ItemsHelper(context);
                     Intent intent = new Intent(context, DetalheActivity.class);
-                    itemsHelper.showItem(context, intent, dados.get(getAdapterPosition()).getId());
+                    itemsHelper.showItem(intent, dados.get(getAdapterPosition()).getId());
                 }
             });
         }

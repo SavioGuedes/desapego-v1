@@ -2,12 +2,15 @@ package com.example.savio.desapego.helpers;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.savio.desapego.ComfirmarCadastroActivity;
 import com.example.savio.desapego.LoginActivity;
 import com.example.savio.desapego.MainActivity;
 import com.example.savio.desapego.api.model.Login;
@@ -16,6 +19,8 @@ import com.example.savio.desapego.api.model.Register;
 import com.example.savio.desapego.services.ApiService;
 import com.example.savio.desapego.utils.ServiceGenerator;
 import com.facebook.AccessToken;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,6 +51,8 @@ public class AuthHelper {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 //condição se os dados foram capturados
                 if (!response.isSuccessful()) {
+                    Intent intent = new Intent(context, LoginActivity.class);
+                    abrirNovaActivity(context, intent);
                     Log.i("LISTA", "Erro: " + "Erro: " + response.code());
                 } else {
                     //                  Atualiza os dados do usuario no Account Manager
@@ -59,7 +66,9 @@ public class AuthHelper {
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Toast.makeText(context, "Não foi possível logar, tente novamente.", Toast.LENGTH_SHORT).show();
-                Log.i("LISTA", "Erro: " + t.toString());
+                Intent intent = new Intent(context, LoginActivity.class);
+
+                abrirNovaActivity(context, intent);
             }
         });
     }
@@ -71,6 +80,11 @@ public class AuthHelper {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 //condição se os dados foram capturados
                 if (!response.isSuccessful()) {
+                    Log.i("REGISTRO", "" + response.code()+": " + response.body());
+                    Intent intent = new Intent(context, LoginActivity.class);
+
+                    abrirNovaActivity(context, intent);
+
                     Log.i("LISTA", "Erro: " + "Erro: " + response.code());
                 } else {
                     //                  Atualiza os dados do usuario no Account Manager
@@ -83,6 +97,9 @@ public class AuthHelper {
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Log.i("REGISTRO", "Falha: " + t.getMessage());
+                Intent intent = new Intent(context, LoginActivity.class);
+
+                abrirNovaActivity(context, intent);
             }
         });
     }
@@ -95,7 +112,7 @@ public class AuthHelper {
             public void onResponse(Call<String> call, Response<String> response) {
                 //condição se os dados foram capturados
                 if (!response.isSuccessful()) {
-                    Log.i("LISTA", "Erro: " + "Erro: " + response.code());
+                    Log.i("REGISTRO", "" + response.code()+": " + response.body());
                 } else {
                     //                  Atualiza os dados do usuario no Account Manager
                     updateAuthToken(response, context, response.body());
@@ -128,9 +145,10 @@ public class AuthHelper {
         accounts = mAccountManager.getAccountsByType("com.desapego");
         if (accounts.length > 0)
             authToken = mAccountManager.peekAuthToken(accounts[0], "full_access");
-        //        Se não há um token do Facebook ou da API vai pra tela de login
+        //        Se não há um token do Facebook ou da API invalida o token do face;
         if (TextUtils.isEmpty(authToken)) {
             Toast.makeText(context, "Precisa logar", Toast.LENGTH_SHORT).show();
+            AccessToken.setCurrentAccessToken(null);
             return false;
         }
 
@@ -143,19 +161,19 @@ public class AuthHelper {
         Account account;
         if (mAccountManager == null)
             setAccountManager(context);
-//                  verifica se há um usuario no aparelho
+        //verifica se há um usuario no aparelho
         if (mAccountManager.getAccountsByType("com.desapego").length > 0) {
             account = mAccountManager.getAccountsByType("com.desapego")[0];
-//            verifica se NÃO é o mesmo usuário
-            if (!TextUtils.equals(account.name, email))
-//                Se não for, adiciona o novo usuário no lugar do outro
-                mAccountManager.setUserData(account, AccountManager.KEY_ACCOUNT_NAME, email);
-        }else { // Cria novo usuário
-            account = new Account(email, "com.desapego");
-            mAccountManager.addAccountExplicitly(account, null, null);
+            //adiciona o novo usuário no lugar do outro
+            mAccountManager.setUserData(account, AccountManager.KEY_ACCOUNT_NAME, email);
+            mAccountManager.setAuthToken(account, "full_access", response.body().getAuthToken());
+            return;
         }
-//        Adiciona o novo token pro usuario
+        account = new Account(email, "com.desapego");
+        mAccountManager.addAccountExplicitly(account, null, null);
+        //Adiciona o novo token pro usuario
         mAccountManager.setAuthToken(account, "full_access", response.body().getAuthToken());
+        AccessToken.setCurrentAccessToken(null);
     }
 
     //finaliza a sessão (Há mais detalhes aqui falta implementar)
@@ -187,4 +205,31 @@ public class AuthHelper {
     }
 
 
+    public void verifyUser(final Context context, final Intent intent) {
+        Login login = new Login();
+        login.setEmail(intent.getStringExtra("EMAIL").toString());
+        apiService.verifyUser(login).enqueue(new Callback<LoginResponse>() {
+            //metodos de respostas
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                //condição se os dados foram capturados
+                if (!response.isSuccessful()) {
+                    //                  Atualiza os dados do usuario no Account Manager
+                    ((Activity) context).startActivity(intent);
+                } else {
+                    Log.i("REGISTRO", "" + response.code()+": " + response.body());
+                    updateDeviceAccountInfo(response, context, intent.getStringExtra("EMAIL" ));
+                    Intent intent = new Intent(context, MainActivity.class);
+                    ((Activity) context).startActivity(intent);
+                    ((Activity) context).finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Toast.makeText(context, "Não foi possível logar, tente novamente.", Toast.LENGTH_SHORT).show();
+                Log.i("LISTA", "Erro: " + t.toString());
+            }
+        });
+    }
 }

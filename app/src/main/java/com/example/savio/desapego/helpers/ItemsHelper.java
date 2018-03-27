@@ -5,6 +5,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
@@ -12,6 +13,8 @@ import com.example.savio.desapego.adapters.PrincipalAdapter;
 import com.example.savio.desapego.api.model.Item;
 import com.example.savio.desapego.services.ApiService;
 import com.example.savio.desapego.utils.ServiceGenerator;
+
+import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -66,8 +69,6 @@ public class ItemsHelper {
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
 
                 if (!response.isSuccessful()) {
-//                    final Intent res = new Intent(context, LoginActivity.class);
-//                    context.startActivity(res);
                     Log.i("LISTA", "Erro: " + "Erro: " + response.code());
                 } else {
                     //condição se os dados foram capturados
@@ -85,7 +86,7 @@ public class ItemsHelper {
         });
     }
 
-    public void showItem(final Context context, final Intent intent, String itemId) {
+    public void showItem(final Intent intent, String itemId) {
         apiService = ServiceGenerator.createService(ApiService.class);
         apiService.getItem(itemId).enqueue(new Callback<Item>() {
             //metodos de respostas
@@ -99,7 +100,35 @@ public class ItemsHelper {
                 } else {
                     intent.putExtra("ITEM_NAME", response.body().getName());
                     intent.putExtra("ITEM_DESCRIPTION", response.body().getDescription());
-                    intent.putExtra("ITEM_IMG_URL", response.body().getImageUrl());
+                    intent.putStringArrayListExtra("IEM_IMAGE_LIST", (ArrayList) response.body().getFotinhas());
+                    context.startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Item> call, Throwable t) {
+                Toast.makeText(context, "Houve um erro.", Toast.LENGTH_SHORT).show();
+
+                Log.i("LISTA", "Erro: " + t.toString());
+            }
+        });
+    }
+
+    public void newItem(final Intent intent, final Item item) {
+        apiService = ServiceGenerator.createService(ApiService.class);
+        apiService.createItem(item).enqueue(new Callback<Item>() {
+            //metodos de respostas
+            @Override
+            public void onResponse(Call<Item> call, Response<Item> response) {
+
+                if (!response.isSuccessful()) {
+//                    final Intent res = new Intent(context, LoginActivity.class);
+//                    context.startActivity(res);
+                    Log.i("LISTA","Erro: " + response.code());
+                } else {
+                    intent.putExtra("ITEM_NAME", response.body().getName());
+                    intent.putExtra("ITEM_DESCRIPTION", response.body().getDescription());
+                    intent.putStringArrayListExtra("IEM_IMAGE_LIST", (ArrayList) response.body().getFotinhas());
                     context.startActivity(intent);
                 }
             }

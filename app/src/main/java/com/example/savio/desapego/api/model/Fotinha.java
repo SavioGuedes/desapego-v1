@@ -26,7 +26,6 @@ public class Fotinha {
         return id.get$oid();
     }
 
-
     public String getUrl() {
         return url;
     }

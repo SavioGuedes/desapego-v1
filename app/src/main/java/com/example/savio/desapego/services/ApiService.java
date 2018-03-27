@@ -35,4 +35,10 @@ public interface ApiService {
 
     @GET("inventory/{id}")
     Call<Item> getItem(@Path("id") String itemId);
+
+    @POST("users/verify_user")
+    Call<LoginResponse> verifyUser(@Body Login login);
+
+    @POST("inventory")
+    Call<Item> createItem(@Body Item item);
 }

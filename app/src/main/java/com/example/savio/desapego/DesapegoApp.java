@@ -17,9 +17,7 @@ public class DesapegoApp extends Application {
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
-        Realm.init(this);
-        RealmConfiguration config = new RealmConfiguration.Builder().name("desapego.realm").deleteRealmIfMigrationNeeded().build();
-        Realm.setDefaultConfiguration(config);
+
     }
 
 

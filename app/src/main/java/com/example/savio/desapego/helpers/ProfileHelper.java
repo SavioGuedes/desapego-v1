@@ -1,6 +1,7 @@
 package com.example.savio.desapego.helpers;
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
+import com.example.savio.desapego.LoginActivity;
 import com.example.savio.desapego.R;
 import com.example.savio.desapego.api.model.Item;
 import com.example.savio.desapego.api.model.Perfil;
@@ -48,8 +50,8 @@ public class ProfileHelper {
                 public void onResponse(Call<Perfil> call, Response<Perfil> response) {
                     //condição se os dados foram capturados
                     if (!response.isSuccessful()) {
-                        //                    final Intent res = new Intent(context, LoginActivity.class);
-                        //                    context.startActivity(res);
+                        final Intent res = new Intent(context, LoginActivity.class);
+                        context.startActivity(res);
                         Log.i("LISTA", "Erro: " + "Erro: " + response.code());
                     } else {
                         Perfil perfil = response.body();
