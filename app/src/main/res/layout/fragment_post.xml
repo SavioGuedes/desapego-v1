@@ -8,9 +8,13 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/perfil_posts_lista"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/principal_recentes">
+        android:layout_height="wrap_content">
 
     </android.support.v7.widget.RecyclerView>
+
+    <com.example.savio.desapego.views.HorizontalDottedProgress
+        android:id="@+id/loading_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </FrameLayout>

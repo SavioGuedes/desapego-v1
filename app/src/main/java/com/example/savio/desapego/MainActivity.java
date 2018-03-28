@@ -18,6 +18,7 @@ import com.example.savio.desapego.fragments.PerfilFragment;
 import com.example.savio.desapego.fragments.PesquisaFragment;
 import com.example.savio.desapego.fragments.PrincipalFragment;
 import com.example.savio.desapego.helpers.AuthHelper;
+import com.example.savio.desapego.helpers.ItemsHelper;
 import com.example.savio.desapego.helpers.ProfileHelper;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         transaction.add(R.id.inflar, new PrincipalFragment(), "principal").commit();
 
 
+
 //------------------Listeners do menu----------------------------------------------------------------//
 
         cliqueItemMenu(ic_pesquisa, new PesquisaFragment(), "pesquisa");
@@ -69,15 +71,17 @@ public class MainActivity extends AppCompatActivity {
                     case "perfil":
                         //Se houver usuario adeus main activity... olá perfil fragment;
                         if (authHelper.isAnyUser(v.getContext())) {
+                            ic_perfil.setEnabled(false);
                             profileHelper = new ProfileHelper(MainActivity.this);
                             profileHelper.showProfile(fragment);
                         }else { // Se não houver usuario chaaama login
-
+                            ic_perfil.setEnabled(true);
                             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                             startActivity(intent);
                         }
                         break;
                     default:
+                        ic_perfil.setEnabled(true);
                         fragmentManager = getSupportFragmentManager();
                         FragmentTransaction transaction = fragmentManager.beginTransaction();
                         //confirmar transição

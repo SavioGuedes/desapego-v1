@@ -4,7 +4,6 @@ import com.example.savio.desapego.DetalheActivity;
 import com.example.savio.desapego.R;
 import com.example.savio.desapego.api.model.Item;
 import com.example.savio.desapego.helpers.ItemsHelper;
-import com.hendraanggrian.widget.PaginatedRecyclerView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
@@ -21,13 +20,12 @@ import java.util.List;
 
 public class PrincipalAdapter extends RecyclerView.Adapter<PrincipalAdapter.Visao> {
 
-    List<Item> dados;
+    List<Item> items;
     Context context;
     private ItemsHelper itemsHelper;
 
-    public PrincipalAdapter(List<Item> dados, Context context) {
-
-        this.dados = dados;
+    public PrincipalAdapter(List<Item> items, Context context) {
+        this.items = items;
         this.context = context;
     }
 
@@ -44,17 +42,17 @@ public class PrincipalAdapter extends RecyclerView.Adapter<PrincipalAdapter.Visa
     @Override
     public void onBindViewHolder(PrincipalAdapter.Visao visao, int position) {
 
-        visao.titulo.setText(dados.get(position).getName());
-        if (dados.get(position).getFotinhas().size() > 0)
+        visao.titulo.setText(items.get(position).getName());
+        if (items.get(position).getFotinhas().size() > 0)
 
-        Picasso.get().load(dados.get(position).getFotinhas().get(0).getUrl()).into(visao.item_image);//altera o icone
+        Picasso.get().load(items.get(position).getFotinhas().get(0).getUrl()).into(visao.item_image);//altera o icone
 
     }
 
     @Override
     public int getItemCount() {
 
-        return dados.size();
+        return items.size();
     }
 
     public class Visao extends RecyclerView.ViewHolder{
@@ -74,7 +72,7 @@ public class PrincipalAdapter extends RecyclerView.Adapter<PrincipalAdapter.Visa
                 public void onClick(View v) {
                     itemsHelper = new ItemsHelper(context);
                     Intent intent = new Intent(context, DetalheActivity.class);
-                    itemsHelper.showItem(intent, dados.get(getAdapterPosition()).getId());
+                    itemsHelper.showItem(intent, items.get(getAdapterPosition()).getId());
                 }
             });
         }

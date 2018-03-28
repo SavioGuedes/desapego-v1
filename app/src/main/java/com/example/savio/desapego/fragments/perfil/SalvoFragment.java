@@ -12,8 +12,13 @@ import android.view.ViewGroup;
 
 import com.example.savio.desapego.MainActivity;
 import com.example.savio.desapego.R;
+import com.example.savio.desapego.adapters.PrincipalAdapter;
+import com.example.savio.desapego.api.model.Item;
 import com.example.savio.desapego.fragments.PerfilFragment;
 import com.example.savio.desapego.helpers.ItemsHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SalvoFragment extends Fragment {
@@ -25,6 +30,7 @@ public class SalvoFragment extends Fragment {
     RecyclerView.Adapter adapter;
 
     private ItemsHelper itemsHelper;
+    private List<Item> listItems;
 
 
     public SalvoFragment() {
@@ -36,7 +42,8 @@ public class SalvoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_salvo, container, false);
-
+        itemsHelper = new ItemsHelper(getContext());
+        listItems = new ArrayList<>();
         //capitura o fragment pai "PerfilFragment"
         fragmentManager = getFragmentManager();
         perfilFragment = (PerfilFragment) fragmentManager.findFragmentByTag("perfil");
@@ -52,8 +59,10 @@ public class SalvoFragment extends Fragment {
         recyclerview.setLayoutManager(layoutmanager);
 
         itemsHelper = new ItemsHelper(getActivity());
+        PrincipalAdapter itemsListAdapter = new PrincipalAdapter(listItems, getContext());
+        recyclerview.setAdapter(itemsListAdapter);
 //        Pega os items da api
-        itemsHelper.userItemsList(recyclerview);
+        itemsHelper.userItemsList(listItems, itemsListAdapter);
 
         return view;
     }

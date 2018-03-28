@@ -11,15 +11,20 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Adapter;
+import android.widget.HorizontalScrollView;
 import android.widget.Toast;
 
 import com.example.savio.desapego.DetalheActivity;
 import com.example.savio.desapego.NovoItemActivity;
+import com.example.savio.desapego.R;
 import com.example.savio.desapego.adapters.PrincipalAdapter;
 import com.example.savio.desapego.api.model.Fotinha;
 import com.example.savio.desapego.api.model.Item;
 import com.example.savio.desapego.services.ApiService;
 import com.example.savio.desapego.utils.ServiceGenerator;
+import com.example.savio.desapego.views.HorizontalDottedProgress;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.StorageReference;
@@ -44,7 +49,7 @@ public class ItemsHelper {
         mAccountManager = AccountManager.get(context);
     }
 
-    public void userItemsList(final RecyclerView recyclerView) {
+    public void userItemsList(final List<Item> itemsList, final RecyclerView.Adapter adapter) {
         Account[] accounts = mAccountManager.getAccountsByType("com.desapego");
         authToken = mAccountManager.peekAuthToken(accounts[0], "full_access");
         apiService = ServiceGenerator.createService(ApiService.class, authToken);
@@ -59,8 +64,12 @@ public class ItemsHelper {
                     Log.i("LISTA", "Erro: " + "Erro: " + response.code());
                 } else {
                     //condição se os dados foram capturados
-                    RecyclerView.Adapter itemsListAdapter = new PrincipalAdapter(response.body(), context);
-                    recyclerView.setAdapter(itemsListAdapter);
+                    HorizontalDottedProgress loadingBar = (HorizontalDottedProgress) ((Activity) context).findViewById(R.id.loading_bar);
+                    itemsList.addAll(response.body());
+                    //Atualiza o adapter com os items da api
+                    adapter.notifyDataSetChanged();
+                    loadingBar.clearAnimation();
+                    loadingBar.setVisibility(View.GONE);
                 }
             }
 
@@ -73,7 +82,7 @@ public class ItemsHelper {
         });
     }
 
-    public void itemsList(final RecyclerView recyclerView) {
+    public void itemsList(final List<Item> itemsList, final RecyclerView.Adapter adapter) {
         apiService = ServiceGenerator.createService(ApiService.class);
         apiService.getItems().enqueue(new Callback<List<Item>>() {
             //metodos de respostas
@@ -84,8 +93,13 @@ public class ItemsHelper {
                     Log.i("LISTA", "Erro: " + "Erro: " + response.code());
                 } else {
                     //condição se os dados foram capturados
-                    RecyclerView.Adapter itemsListAdapter = new PrincipalAdapter(response.body(), context);
-                    recyclerView.setAdapter(itemsListAdapter);
+
+                    HorizontalDottedProgress loadingBar = (HorizontalDottedProgress) ((Activity) context).findViewById(R.id.loading_bar);
+                    itemsList.addAll(response.body());
+                    //Atualiza o adapter com os items da api
+                    adapter.notifyDataSetChanged();
+                    loadingBar.clearAnimation();
+                    loadingBar.setVisibility(View.GONE);
                 }
             }
 

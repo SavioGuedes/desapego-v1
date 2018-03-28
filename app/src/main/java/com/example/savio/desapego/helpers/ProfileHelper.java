@@ -1,6 +1,7 @@
 package com.example.savio.desapego.helpers;
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,8 +10,10 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.widget.Button;
 
 import com.example.savio.desapego.LoginActivity;
+import com.example.savio.desapego.MainActivity;
 import com.example.savio.desapego.R;
 import com.example.savio.desapego.api.model.Item;
 import com.example.savio.desapego.api.model.Perfil;
@@ -68,13 +71,13 @@ public class ProfileHelper {
 
                 @Override
                 public void onFailure(Call<Perfil> call, Throwable t) {
-
                     Log.i("LISTA", "Erro: " + t.toString());
                 }
             });
         }
 
     }
+
 
 
 }
