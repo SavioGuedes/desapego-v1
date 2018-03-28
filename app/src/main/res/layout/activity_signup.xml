@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:text="Criar Conta"
         android:textColor="@android:color/white"
+        android:layout_centerHorizontal="true"
         android:textSize="32sp"
         android:paddingBottom="8dp"
         />
@@ -85,7 +86,7 @@
         android:text="criar conta"
         android:textAllCaps="false"
         android:textColor="@color/branco"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/signup_possui_conta"

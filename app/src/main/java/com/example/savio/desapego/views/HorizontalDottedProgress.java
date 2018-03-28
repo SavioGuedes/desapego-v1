@@ -11,10 +11,6 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.Transformation;
 
-/**
- * Created by supanonymous on 28/03/18.
- */
-
 public class HorizontalDottedProgress extends View {
     //actual dot radius
     private int mDotRadius = 5;

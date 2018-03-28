@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.savio.desapego.ConfiguracaoActivity;
 import com.example.savio.desapego.MainActivity;
 import com.example.savio.desapego.NovoItemActivity;
 import com.example.savio.desapego.R;
@@ -70,17 +71,18 @@ public class PerfilFragment extends Fragment {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.perfil_inflar, new PostFragment(), "posts").commit();
 
+
+//------------------Listeners-----------------------------------------------------------------------//
+
         //botão de mais para ver menu do perfil
         mais.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //chama a função de logout
-                authHelper.logOut(getContext());
+                Intent intent = new Intent(getActivity(), ConfiguracaoActivity.class);
+                startActivity(intent);
             }
         });
-
-//------------------Listeners do tabs---------------------------------------------------------------//
 
         cliqueItemMenu(posts, new PostFragment(), "posts");
         cliqueItemMenu(salvos, new SalvoFragment(), "salvos");

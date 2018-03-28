@@ -4,7 +4,8 @@
     <color name="branco">#ffffff</color>
     <color name="preto">#000000</color>
     <color name="cinza">#a1a1a1</color>
-    <color name="cinzinha">#eaeaea</color>
+    <color name="cinzinha">#ebebeb</color>
+    <color name="linha_fina">#f5f5f5</color>
     <color name="cinzinha2">#d6d6d6</color>
     <color name="google">#d62d20</color>
 
