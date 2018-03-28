@@ -45,7 +45,9 @@ public class PrincipalAdapter extends RecyclerView.Adapter<PrincipalAdapter.Visa
     public void onBindViewHolder(PrincipalAdapter.Visao visao, int position) {
 
         visao.titulo.setText(dados.get(position).getName());
-        Picasso.get().load(dados.get(position).getFotinhas().get(1).getUrl()).into(visao.item_image);//altera o icone
+        if (dados.get(position).getFotinhas().size() > 0)
+
+        Picasso.get().load(dados.get(position).getFotinhas().get(0).getUrl()).into(visao.item_image);//altera o icone
 
     }
 

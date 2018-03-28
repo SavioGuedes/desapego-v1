@@ -10,13 +10,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.savio.desapego.adapters.NovoItemAdapter;
 import com.example.savio.desapego.api.model.Item;
 import com.example.savio.desapego.helpers.ItemsHelper;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.FileNotFoundException;
@@ -37,6 +37,8 @@ public class NovoItemActivity extends AppCompatActivity {
     private TextView novo_item_titulo;
     private TextView novo_item_desc;
     private ItemsHelper itemsHelper;
+    private ArrayList<Uri> arrayUri;
+    private StorageReference storageRef;
 
 //------------------ciclo de vida------------------------------------------------------------------------//
 
@@ -44,9 +46,8 @@ public class NovoItemActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         //publicar até 4 imagens
-        if(adapter != null && adapter.getItemCount() == 4){
+        if (adapter != null && adapter.getItemCount() == 4) {
 
             novo_item_btn_img.setVisibility(View.GONE);
         }
@@ -57,7 +58,9 @@ public class NovoItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novo_item);
-
+        //Cria a referencia para o firebase
+        storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://desapego-198301.appspot.com/");
+        arrayUri = new ArrayList<>();
         itemsHelper = new ItemsHelper(NovoItemActivity.this);
         fotos_galeria = new ArrayList<>();
         //configuração do recyclerview
@@ -66,7 +69,7 @@ public class NovoItemActivity extends AppCompatActivity {
         layoutmanager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerview.setLayoutManager(layoutmanager);
         novo_item_titulo = (TextView) findViewById(R.id.novo_item_titulo);
-        novo_item_desc = (TextView) findViewById(R.id.novo_item_cancelar);
+        novo_item_desc = (TextView) findViewById(R.id.novo_item_descricao);
 
         compartilhar_item_tv = (TextView) findViewById(R.id.novo_item_compartilhar);
         novo_item_btn_img = (ImageView) findViewById(R.id.novo_item_btn_img);
@@ -85,8 +88,11 @@ public class NovoItemActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (fotos_galeria.size() > 0 && !TextUtils.isEmpty(novo_item_titulo.getText()) && !TextUtils.isEmpty(novo_item_desc.getText())) {
                     // faz a chamada à API
-                    Item novoItem = new Item();
-                    //Ainda pensando como vai ser essa merda
+
+                    Item item = new Item();
+                    item.setName(novo_item_titulo.getText().toString());
+                    item.setDescription(novo_item_desc.getText().toString());
+                    itemsHelper.newItem(storageRef, arrayUri, item);
                 }
             }
         });
@@ -98,12 +104,12 @@ public class NovoItemActivity extends AppCompatActivity {
 //------------------Para facilitar minha vida-------------------------------------------------------//
 
     //abre a tela de galeria do android
-    private void pegarFotos(){
+    private void pegarFotos() {
 
         Intent galleryIntent = new Intent(
                 Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent , RESULT_GALLERY );
+        startActivityForResult(galleryIntent, RESULT_GALLERY);
 
     }
 
@@ -113,7 +119,7 @@ public class NovoItemActivity extends AppCompatActivity {
 
         switch (requestCode) {
 
-            case RESULT_GALLERY :
+            case RESULT_GALLERY:
 
                 if (data != null) {
 
@@ -121,9 +127,10 @@ public class NovoItemActivity extends AppCompatActivity {
 
                         //retorna a foto da galeria
                         final Uri imagemUri = data.getData();
+                        //Salva o endereço para enviar pro Helper mais tarde
+                        arrayUri.add(imagemUri);
 
-
-                        if(imagemUri != null){
+                        if (imagemUri != null) {
 
                             //converte em bitmap
                             Bitmap imagem = BitmapFactory.decodeStream(getContentResolver().openInputStream(imagemUri));
@@ -172,7 +179,7 @@ public class NovoItemActivity extends AppCompatActivity {
         final int width = outWidth;
         int inSampleSize = 1;
 
-        if (height > 640 || width > 480 ) {
+        if (height > 640 || width > 480) {
 
             final int halfHeight = height / 2;
             final int halfWidth = width / 2;
